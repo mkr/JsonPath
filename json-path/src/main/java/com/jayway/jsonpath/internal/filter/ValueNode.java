@@ -1,11 +1,8 @@
 package com.jayway.jsonpath.internal.filter;
 
-import com.jayway.jsonpath.InvalidPathException;
-import com.jayway.jsonpath.JsonPathException;
-import com.jayway.jsonpath.Predicate;
+import com.jayway.jsonpath.*;
 import com.jayway.jsonpath.internal.Path;
 import com.jayway.jsonpath.internal.path.PathCompiler;
-import net.minidev.json.parser.JSONParser;
 
 import java.time.OffsetDateTime;
 import java.util.regex.Pattern;
@@ -146,9 +143,9 @@ public abstract class ValueNode {
         char c1 = str.charAt(str.length() - 1);
         if ((c0 == '[' && c1 == ']') || (c0 == '{' && c1 == '}')){
             try {
-                new JSONParser(JSONParser.MODE_PERMISSIVE).parse(str);
+                Configuration.defaultConfiguration().jsonProvider().parse(str);
                 return true;
-            } catch(Exception e){
+            } catch(InvalidJsonException e){
                 return false;
             }
         }
